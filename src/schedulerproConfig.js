@@ -9,10 +9,12 @@ export const schedulerproConfig = {
     viewPreset : 'hourAndDay',
     columns    : [
         {
-            text       : 'Name',
-            field      : 'name',
-            width      : 200,
-            htmlEncode : false,
+            text          : 'Name',
+            field         : 'name',
+            readOnly      : true,
+            cellMenuItems : false,
+            width         : 200,
+            htmlEncode    : false,
             renderer({ record }) {
                 const imageUrl = record.imageUrl || `https://${import.meta.env.VITE_MICROSOFT_DYNAMICS_ORG_ID}.crm4.dynamics.com/Webresources/msdyn_/fps/ScheduleBoard/css/images/unknownResource.jpg`;
                 const name = record.name || '';
@@ -38,6 +40,7 @@ export const schedulerproConfig = {
                     items : {
                         percentDoneField : null,
                         effortField      : null,
+                        postambleField   : null,
                         preambleField    : {
                             label : 'Travel to'
                         }
