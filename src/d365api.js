@@ -35,7 +35,8 @@ export async function getResources() {
 
     const response = await fetch(
         `${orgUrl}/api/data/${apiVersion}/bookableresources?` +
-        `$select=bookableresourceid,name`,
+        `$select=bookableresourceid,name&` +
+        `$expand=ContactId($select=contactid,entityimage)`,
         {
             headers: {
                 'Authorization': `Bearer ${token}`,

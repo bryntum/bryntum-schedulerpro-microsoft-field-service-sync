@@ -8,7 +8,21 @@ export const schedulerproConfig = {
     timeZone   : 'UTC',
     viewPreset : 'hourAndDay',
     columns    : [
-        { text : 'Name', field : 'name', width : 160 }
+        {
+            text : 'Name',
+            field : 'name',
+            width : 200,
+            htmlEncode : false,
+            renderer({ record }) {
+                const imageUrl = record.imageUrl || `https://${import.meta.env.VITE_MICROSOFT_DYNAMICS_ORG_ID}.crm4.dynamics.com/Webresources/msdyn_/fps/ScheduleBoard/css/images/unknownResource.jpg`;
+                const name = record.name || '';
+
+                return `<div style="display: flex; align-items: center; gap: 8px;">
+                    <img src="${imageUrl}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />
+                    <span>${name}</span>
+                </div>`;
+            }
+        }
     ],
     features : {
         dependencies : false,

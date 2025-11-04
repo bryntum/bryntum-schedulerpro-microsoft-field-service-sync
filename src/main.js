@@ -23,12 +23,9 @@ async function displayUI() {
         getBookings()
     ]);
 
-    console.log('Resources:', resourcesData);
-    console.log('Bookings:', bookingsData);
-
     // Initialize Scheduler Pro with raw D365 data
     // Field mapping is handled by CustomEventModel and CustomResourceModel
-    new SchedulerPro({
+    const schedulerPro = new SchedulerPro({
         ...schedulerproConfig,
         resourceStore : {
             modelClass : CustomResourceModel,
