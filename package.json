@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^4.26.0",
-    "@bryntum/schedulerpro": "^6.3.3"
+    "@bryntum/schedulerpro": "^7.0.0-alpha.3"
   }
 }

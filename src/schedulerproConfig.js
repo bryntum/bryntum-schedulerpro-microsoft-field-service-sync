@@ -1,4 +1,4 @@
-import { updateDynamics365FieldService } from './d365sync.js';
+import { updateDynamics365FieldService, setTaskEditorOpen } from './d365syncData.js';
 import { signOut } from './auth.js';
 
 export const schedulerproConfig = {
@@ -31,7 +31,7 @@ export const schedulerproConfig = {
         eventBuffer  : {
             // The event buffer time spans are considered as unavailable time
             bufferIsUnavailableTime : true,
-            tooltipTemplate         : ({ duration }) => `<i class="b-icon b-fa-car"></i>Travel time: ${duration}`
+            tooltipTemplate         : ({ duration }) => `<i class="fa fa-car"></i>Travel time: ${duration}`
         },
 
         taskEdit : {
@@ -47,6 +47,19 @@ export const schedulerproConfig = {
 
                     }
                 }
+            },
+            listeners : {
+                beforeShow() {
+                    setTaskEditorOpen(true);
+                },
+                // When save button is clicked, allow sync
+                beforeEventSave() {
+                    setTaskEditorOpen(false);
+                },
+                // When cancel or dialog closes without saving
+                beforeCancel() {
+                    setTaskEditorOpen(false);
+                }
             }
         }
     },
@@ -55,13 +68,12 @@ export const schedulerproConfig = {
         dataChange : function(event) {
             updateDynamics365FieldService(event);
         }
-    },tbar : {
-
+    },
+    tbar : {
         items : {
-
             deleteButton : {
                 text  : 'Signout',
-                icon  : 'b-fa b-fa-sign-out',
+                icon  : 'fa fa-sign-out',
                 style : 'margin-left: auto;',
                 onClick() {
                     signOut().then(() => {
@@ -72,25 +84,4 @@ export const schedulerproConfig = {
             }
         }
     }
-    // project : {
-
-    //     resources : [
-    //         { id : 1, name : 'Dan Stevenson' },
-    //         { id : 2, name : 'Talisha Babin' }
-    //     ],
-
-    //     events : [
-    //         { id : 1, startDate : '2025-12-01', duration : 3, durationUnit : 'd', name : 'Event 1' },
-    //         { id : 2, duration : 4, durationUnit : 'd', name : 'Event 2' }
-    //     ],
-
-    //     assignments : [
-    //         { event : 1, resource : 1 },
-    //         { event : 2, resource : 2 }
-    //     ],
-
-    //     dependencies : [
-    //         { fromEvent : 1, toEvent : 2 }
-    //     ]
-    // }
 };

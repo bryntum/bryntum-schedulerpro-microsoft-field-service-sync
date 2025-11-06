@@ -1,4 +1,7 @@
-@import "@bryntum/schedulerpro/schedulerpro.stockholm.css";
+@import "@bryntum/schedulerpro/fontawesome/css/fontawesome.css";
+@import "@bryntum/schedulerpro/fontawesome/css/solid.css";
+@import "@bryntum/schedulerpro/schedulerpro.css";
+@import "@bryntum/schedulerpro/svalbard-light.css";
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap";
 
 * {
@@ -16,6 +19,18 @@ html {
   flex-direction : column;
   height         : 100vh;
   font-size      : 14px;
+}
+
+main {
+  position: relative;
+  height: 100vh;
+}
+
+#signin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .loader-container {
@@ -52,7 +67,7 @@ html {
 .b-sch-horizontal .b-sch-event-wrap .event-duration{
   margin-top:0.3em;
 }
-.b-sch-horizontal .b-sch-event-wrap .b-sch-event:not(.b-milestone) .b-fa{
+.b-sch-horizontal .b-sch-event-wrap .b-sch-event:not(.b-milestone) .fa{
   margin-inline-end:0.75em;
 }
 

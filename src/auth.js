@@ -26,11 +26,13 @@ export function ensureScope(scope) {
         msalRequest.scopes.push(scope);
     }
 }
+
 // Log the user in
 export async function signIn() {
     const authResult = await msalInstance.loginPopup(msalRequest);
     sessionStorage.setItem('msalAccount', authResult.account.username);
 }
+
 export async function getToken() {
     const account = sessionStorage.getItem('msalAccount');
     if (!account) {

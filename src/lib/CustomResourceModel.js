@@ -5,11 +5,8 @@ export default class CustomResourceModel extends ResourceModel {
     static $name = 'CustomResourceModel';
 
     static fields = [
-        // Map D365 bookableresourceid to Bryntum id
         { name : 'id', dataSource : 'bookableresourceid' },
-        // Store original D365 resource id
         { name : 'bookableresourceid', type : 'string' },
-        // Extract base64 image from expanded ContactId relationship
         {
             name    : 'imageUrl',
             type    : 'string',
@@ -22,7 +19,6 @@ export default class CustomResourceModel extends ResourceModel {
                 return null;
             }
         },
-        // Sanitize and store ETag
         {
             name    : 'etag',
             type    : 'string',

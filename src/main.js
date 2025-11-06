@@ -2,7 +2,7 @@ import { SchedulerPro } from '@bryntum/schedulerpro';
 import './style.css';
 import { schedulerproConfig } from './schedulerproConfig';
 import { signIn } from './auth.js';
-import { getResources, getBookings } from './d365api.js';
+import { getResources, getBookings } from './crudFunctions.js';
 import CustomEventModel from './lib/CustomEventModel.js';
 import CustomResourceModel from './lib/CustomResourceModel.js';
 
@@ -14,6 +14,7 @@ async function displayUI() {
     if (!account) {
         await signIn();
     }
+    signInLink.style = 'display: none';
     const content = document.getElementById('content');
     content.style = 'display: block';
 
@@ -37,7 +38,6 @@ async function displayUI() {
         }
     });
 }
-
 
 if (sessionStorage.getItem('msalAccount')) {
     displayUI();
