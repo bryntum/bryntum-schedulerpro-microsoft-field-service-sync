@@ -1,3 +1,4 @@
+import { DateHelper } from '@bryntum/schedulerpro';
 import { signOut } from './auth.js';
 import {
     updateBooking,
@@ -47,7 +48,11 @@ async function updateDynamics365FieldService(event) {
                 const bookingUpdates = {};
 
                 // Get travel duration from the travelDuration field (mapped to msdyn_estimatedtravelduration)
-                const travelMinutes = recordData.travelDuration || 0;
+                console.log({ recordData });
+                let travelMinutes = null;
+                if (recordData?.preamble) {
+                    travelMinutes = DateHelper.parseDuration(recordData.preamble).magnitude;
+                }
 
                 // Check if any time-related field changed
                 const hasTimeChange = 'startDate' in modifiedFields || 'endDate' in modifiedFields || 'duration' in modifiedFields;
@@ -81,37 +86,23 @@ async function updateDynamics365FieldService(event) {
                     const hasStartChange = 'startDate' in modifiedFields;
                     const hasEndChange = 'endDate' in modifiedFields;
 
-                    if (travelMinutes > 0) {
-                        // With travel time: only update changed fields
-                        // Don't update msdyn_estimatedtravelduration as it's calculated by Field Service
-                        if (hasStartChange) {
-                            // Start date changed - update start time and arrival time
-                            const arrivalTime = record.startDate;
-                            const actualStartTime = new Date(arrivalTime.getTime());
-                            actualStartTime.setMinutes(actualStartTime.getMinutes() - travelMinutes);
+                    if (hasStartChange) {
+                        console.log({ travelMinutes });
+                        // Calculate starttime by subtracting travel from work start time
+                        // Field Service will calculate msdyn_estimatedarrivaltime = starttime + travel
+                        const workStartTime = record.startDate;
+                        const actualStartTime = new Date(workStartTime.getTime());
+                        actualStartTime.setMinutes(actualStartTime.getMinutes() - travelMinutes);
 
-                            bookingUpdates.starttime = actualStartTime.toISOString();
-                            bookingUpdates.msdyn_estimatedarrivaltime = arrivalTime.toISOString();
-                        }
-
-                        if (hasEndChange) {
-                            // End date changed - only update end time and work duration
-                            bookingUpdates.endtime = record.endDate.toISOString();
-
-                            // Calculate work duration (from arrival to end)
-                            const workDurationMs = record.endDate.getTime() - record.startDate.getTime();
-                            const workDurationMinutes = Math.round(workDurationMs / 60000);
-                            bookingUpdates.duration = workDurationMinutes;
-                        }
+                        bookingUpdates.starttime = actualStartTime.toISOString();
                     }
-                    else {
-                        // Without travel time: simple update
-                        if (hasStartChange) {
-                            bookingUpdates.starttime = record.startDate.toISOString();
-                        }
-                        if (hasEndChange) {
-                            bookingUpdates.endtime = record.endDate.toISOString();
-                        }
+
+                    if (hasEndChange) {
+                        const workEndTime = record.endDate;
+                        const actualEndTime = new Date(workEndTime.getTime());
+                        actualEndTime.setMinutes(actualEndTime.getMinutes() - travelMinutes);
+
+                        bookingUpdates.endtime = actualEndTime.toISOString();
                     }
                 }
 
