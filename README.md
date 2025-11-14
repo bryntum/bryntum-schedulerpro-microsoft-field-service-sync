@@ -14,13 +14,13 @@ npm install
 Install the Bryntum Scheduler Pro component by first following the [Using Bryntum NPM repository and packages](https://bryntum.com/products/schedulerpro/docs/guide/SchedulerPro/npm-repository) guide to access the private Bryntum repository. Then, install the component. If you have a Bryntum license, use the following command:
 
 ```sh
-npm install @bryntum/schedulerpro@6.3.3 
+npm install @bryntum/schedulerpro 
 ```
 
 If you're using a Bryntum trial license, use the following command:
 
 ```sh
-npm install @bryntum/schedulerpro@npm:@bryntum/schedulerpro-trial@6.3.3
+npm install @bryntum/schedulerpro@npm:@bryntum/schedulerpro-trial
 ```
 
 ## Running the app
