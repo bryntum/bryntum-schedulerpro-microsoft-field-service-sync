@@ -1,7 +1,9 @@
+const today = new Date();
+
 export const schedulerproConfig = {
     appendTo  : 'app',
-    startDate : new Date(2025, 11, 1),
-    endDate   : new Date(2025, 11, 10),
+    startDate : new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8),
+    endDate   : new Date(today.getFullYear(), today.getMonth(), today.getDate(), 21),
     columns   : [
         { text : 'Name', field : 'name', width : 160 }
     ],
