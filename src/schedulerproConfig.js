@@ -22,8 +22,6 @@ export const schedulerproConfig = {
     appendTo   : 'app',
     startDate  : new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8),
     endDate    : new Date(today.getFullYear(), today.getMonth(), today.getDate(), 21),
-    // Use local timezone instead of UTC for display
-    // Data will still be sent/received as UTC via ISO strings
     viewPreset : 'hourAndDay',
     columns    : [
         {
